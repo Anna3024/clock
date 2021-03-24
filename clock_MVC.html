@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #dcefe8;
+        }
+        table {
+            width: 100%;
+        }
+        .yellowCircle {
+            background-color: #bf6673;
+            position: relative;
+        }
+        svg, canvas, .yellowCircle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .greenCircle {
+            background-color: #f0d5bf   ;
+            position: absolute;
+            text-align: center;
+        }
+        .pointer {
+            position: absolute;
+            background-color: black;
+            z-index: -1;
+        }
+        button {
+            margin: 10px;
+            width: 50px;
+            background-color: #77a29f;
+            border-radius: 5px;
+        }
+        h1 {
+            font-weight: lighter;
+        }
+        td {
+            width: 30%;
+            height: 49vh;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td id="NY">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Нью-Йорк (GMT-5)</span>
+            </td>
+            <td id="London">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Лондон (GMT)</span>
+                <svg>
+            </td>
+            <td id="Berlin">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Берлин (GMT+1)</span>
+                <canvas>
+                    Ваш браузер не поддерживает canvas.
+                </canvas>
+            </td>
+        </tr>
+        <tr>
+            <td id="Minsk">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Минск (GMT+3)</span>
+            </td>
+            <td id="Tokyo">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Токио (GMT+9)</span>
+                <svg>
+            </td>
+            <td id="Vladivostok">
+                <button>старт</button>
+                <button>стоп</button>
+                <span>Владивосток (GMT+10)</span>
+                <canvas>
+                    Ваш браузер не поддерживает canvas.
+                </canvas>
+            </td>
+        </tr>
+    </table>
+
+    <script src="js/ClockControllerButtons.js"></script>
+    <script src="js/Clock.js"></script>
+    <script src="js/ClockViewDOM.js"></script>
+    <script src="js/ClockViewSVG.js"></script>
+    <script src="js/ClockViewCanvas.js"></script>
+
+    <script>
+
+        const clockNY = document.getElementById('NY');
+        const clockLondon = document.getElementById('London');
+        const clockBerlin = document.getElementById('Berlin');
+        const clockMinsk = document.getElementById('Minsk');
+        const clockTokyo = document.getElementById('Tokyo');
+        const clockVladivostok = document.getElementById('Vladivostok');
+
+        let clockWidth = Math.min((clockNY.offsetWidth-10),(clockNY.offsetHeight-70));
+
+        const svgNS = "http://www.w3.org/2000/svg";
+
+        const clockViewDOMNY = new ClockViewDOM();
+        const clockModelNY = new Clock();
+        const clockControllerButtonsNY = new ClockControllerButtons();
+        clockViewDOMNY.init(clockNY);
+        clockModelNY.init(clockViewDOMNY, -5);
+        clockControllerButtonsNY.init(clockModelNY,clockNY);
+
+        const clockViewDOMMinsk = new ClockViewDOM();
+        const clockModelMinsk = new Clock();
+        const clockControllerButtonsMinsk = new ClockControllerButtons();
+        clockViewDOMMinsk.init(clockMinsk);
+        clockModelMinsk.init(clockViewDOMMinsk, 3);
+        clockControllerButtonsMinsk.init(clockModelMinsk,clockMinsk);
+
+        const ClockViewSVGLondon = new ClockViewSVG();
+        const clockModelLondon = new Clock();
+        const clockControllerButtonsLondon = new ClockControllerButtons();
+        ClockViewSVGLondon.init(clockLondon);
+        clockModelLondon.init(ClockViewSVGLondon, 0);
+        clockControllerButtonsLondon.init(clockModelLondon,clockLondon);
+
+        const clockViewSVGTokyo = new ClockViewSVG();
+        const clockModelTokyo = new Clock();
+        const clockControllerButtonsTokyo = new ClockControllerButtons();
+        clockViewSVGTokyo.init(clockTokyo);
+        clockModelTokyo.init(clockViewSVGTokyo, 9);
+        clockControllerButtonsTokyo.init(clockModelTokyo,clockTokyo);
+
+        const clockViewCanvasBerlin = new ClockViewCanvas();
+        const clockModelBerlin = new Clock();
+        const clockControllerButtonsBerlin = new ClockControllerButtons();
+        clockViewCanvasBerlin.init(clockBerlin);
+        clockModelBerlin.init(clockViewCanvasBerlin, 1);
+        clockControllerButtonsBerlin.init(clockModelBerlin,clockBerlin);
+
+        const clockViewCanvasVladivostok = new ClockViewCanvas();
+        const clockModelVladivostok = new Clock();
+        const clockControllerButtonsVladivostok = new ClockControllerButtons();
+        clockViewCanvasVladivostok.init(clockVladivostok);
+        clockModelVladivostok.init(clockViewCanvasVladivostok, 10);
+        clockControllerButtonsVladivostok.init(clockModelVladivostok,clockVladivostok);
+    </script>
+</body>
+</html>
